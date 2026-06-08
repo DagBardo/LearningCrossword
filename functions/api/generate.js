@@ -200,9 +200,4 @@ export async function onRequestGet() {
     service: "learning-crossword"
   });
 }
-export async function onRequestGet() {
-  return Response.json({
-    status: "ok",
-    service: "learning-crossword"
-  });
-}
+
