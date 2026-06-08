@@ -200,3 +200,9 @@ export async function onRequestGet() {
     { status: 405 }
   );
 }
+export async function onRequestGet() {
+  return Response.json({
+    status: "ok",
+    service: "learning-crossword"
+  });
+}
