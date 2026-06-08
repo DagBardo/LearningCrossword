@@ -7,7 +7,7 @@ export async function onRequestPost(context) {
       { status: 500 }
     );
   }
-
+ 
   const body = await context.request.json().catch(() => ({}));
   const topic = body.topic || "General knowledge";
   const difficulty = Number(body.difficulty || 2);
