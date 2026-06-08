@@ -195,10 +195,10 @@ export async function onRequestPost(context) {
 }
 
 export async function onRequestGet() {
-  return Response.json(
-    { error: "Use POST /api/generate" },
-    { status: 405 }
-  );
+  return Response.json({
+    status: "ok",
+    service: "learning-crossword"
+  });
 }
 export async function onRequestGet() {
   return Response.json({
