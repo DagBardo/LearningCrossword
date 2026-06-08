@@ -1,0 +1,17 @@
+{
+  "title": "Buddhism",
+  "difficulty": 3,
+  "style": "Learning",
+  "size": 12,
+  "entries": [
+    { "answer": "DHARMA", "clue": "Teaching or law", "note": "Dharma can mean teaching, truth, or the way things are." },
+    { "answer": "SUTRA", "clue": "Scriptural discourse", "note": "Sutras preserve teachings in compact, memorable form." },
+    { "answer": "ZEN", "clue": "Meditative school of Buddhism", "note": "Zen emphasizes direct insight and practice." },
+    { "answer": "SANGHA", "clue": "Community of practitioners", "note": "The sangha is one of the Three Jewels." },
+    { "answer": "NIRVANA", "clue": "Extinction of grasping", "note": "Nirvana literally suggests blowing out or extinguishing." },
+    { "answer": "ANATTA", "clue": "Doctrine of non-self", "note": "Anatta denies a permanent, independent self." },
+    { "answer": "DUKKHA", "clue": "Unsatisfactoriness or suffering", "note": "Dukkha names the instability built into conditioned experience." },
+    { "answer": "KARMA", "clue": "Action and consequence", "note": "Karma concerns intentional action rather than simple fate." },
+    { "answer": "METTA", "clue": "Loving-kindness", "note": "Metta is goodwill cultivated toward oneself and others." }
+  ]
+}

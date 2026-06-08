@@ -1,0 +1,17 @@
+{
+  "title": "Learning",
+  "difficulty": 1,
+  "style": "Plain",
+  "size": 12,
+  "entries": [
+    { "answer": "MEMORY", "clue": "Capacity to retain information", "note": "Memory includes working, episodic, semantic, and procedural forms." },
+    { "answer": "FOCUS", "clue": "Directed attention", "note": "Focus is selective; it always excludes something." },
+    { "answer": "MODEL", "clue": "Simplified representation of a system", "note": "Models are useful because they omit detail." },
+    { "answer": "RECALL", "clue": "Retrieving something from memory", "note": "Recall is usually harder than recognition." },
+    { "answer": "SKILL", "clue": "Ability improved by practice", "note": "Skill develops through feedback, repetition, and refinement." },
+    { "answer": "PRACTICE", "clue": "Repeated effort toward improvement", "note": "Practice is most effective when it includes feedback." },
+    { "answer": "ERROR", "clue": "Mistake that can teach", "note": "Error correction is central to learning." },
+    { "answer": "FEEDBACK", "clue": "Information used to improve performance", "note": "Feedback closes the loop between action and correction." },
+    { "answer": "TRANSFER", "clue": "Applying learning in a new context", "note": "Transfer is one sign that knowledge has become flexible." }
+  ]
+}

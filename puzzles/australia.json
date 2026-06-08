@@ -1,0 +1,68 @@
+{
+  "title": "Australia",
+  "difficulty": 2,
+  "style": "Learning",
+  "size": 12,
+  "entries": [
+    {
+      "answer": "CANBERRA",
+      "clue": "Australia's capital city",
+      "note": "Canberra was chosen as a compromise between Sydney and Melbourne."
+    },
+    {
+      "answer": "WATTLE",
+      "clue": "Golden national floral emblem",
+      "note": "Golden wattle is Australia's national floral emblem."
+    },
+    {
+      "answer": "ULURU",
+      "clue": "Sacred sandstone monolith in central Australia",
+      "note": "Uluru is sacred to the Anangu people."
+    },
+    {
+      "answer": "KOALA",
+      "clue": "Eucalyptus-eating marsupial",
+      "note": "Koalas are marsupials, not bears."
+    },
+    {
+      "answer": "DINGO",
+      "clue": "Wild Australian canid",
+      "note": "Dingoes occupy a complicated ecological and cultural place in Australia."
+    },
+    {
+      "answer": "HOBART",
+      "clue": "Capital of Tasmania",
+      "note": "Hobart is Tasmania's capital."
+    },
+    {
+      "answer": "BILBY",
+      "clue": "Long-eared desert marsupial",
+      "note": "The bilby has become a native alternative to the Easter bunny."
+    },
+    {
+      "answer": "REEF",
+      "clue": "Great Barrier ___",
+      "note": "The Great Barrier Reef is the world's largest coral reef system."
+    },
+    {
+      "answer": "EMU",
+      "clue": "Large flightless bird on Australia's coat of arms",
+      "note": "The emu appears with the kangaroo on Australia's coat of arms."
+    },
+    {
+      "answer": "OPAL",
+      "clue": "Gem famously mined at Coober Pedy",
+      "note": "Australia produces much of the world's opal."
+    },
+    {
+      "answer": "QUOKKA",
+      "clue": "Small marsupial known for a seeming smile",
+      "note": "Quokkas are strongly associated with Rottnest Island."
+    },
+    {
+      "answer": "NULLARBOR",
+      "clue": "Treeless southern plain",
+      "note": "The Nullarbor Plain's name derives from Latin roots meaning no trees."
+    }
+  ]
+}

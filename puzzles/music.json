@@ -1,0 +1,17 @@
+{
+  "title": "Music",
+  "difficulty": 2,
+  "style": "Theory",
+  "size": 12,
+  "entries": [
+    { "answer": "MELODY", "clue": "A sequence of pitches heard as a line", "note": "Melody is the horizontal aspect of music." },
+    { "answer": "HARMONY", "clue": "Simultaneous sounding of pitches", "note": "Harmony gives music vertical structure." },
+    { "answer": "RHYTHM", "clue": "Patterning of sound in time", "note": "Rhythm organizes duration and accent." },
+    { "answer": "TEMPO", "clue": "Speed of a piece", "note": "Tempo is usually measured in beats per minute." },
+    { "answer": "CADENCE", "clue": "Phrase-ending gesture", "note": "A cadence gives music punctuation." },
+    { "answer": "FUGUE", "clue": "Contrapuntal form built from imitation", "note": "A fugue develops a subject through overlapping voices." },
+    { "answer": "SONATA", "clue": "Instrumental form or genre", "note": "Sonata can name both a genre and a formal design." },
+    { "answer": "MODAL", "clue": "Based on modes rather than major/minor tonality", "note": "Modal music draws on scales such as Dorian, Phrygian, and Mixolydian." },
+    { "answer": "TIMBRE", "clue": "Tone color", "note": "Timbre is what makes a violin and flute sound different on the same pitch." }
+  ]
+}

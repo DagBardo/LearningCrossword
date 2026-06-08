@@ -1,0 +1,17 @@
+{
+  "title": "Shakespeare",
+  "difficulty": 2,
+  "style": "Literary",
+  "size": 12,
+  "entries": [
+    { "answer": "HAMLET", "clue": "Prince of Denmark", "note": "Hamlet is Shakespeare's most famous tragic protagonist." },
+    { "answer": "MACBETH", "clue": "Scottish thane undone by ambition", "note": "Macbeth dramatizes ambition, prophecy, and moral collapse." },
+    { "answer": "LEAR", "clue": "King who divides his realm", "note": "King Lear begins with a catastrophic test of love." },
+    { "answer": "OPHELIA", "clue": "Daughter of Polonius", "note": "Ophelia is caught between obedience, love, and political violence." },
+    { "answer": "IAGO", "clue": "Othello's manipulative ensign", "note": "Iago is one of Shakespeare's most opaque villains." },
+    { "answer": "PUCK", "clue": "Mischievous fairy in a forest comedy", "note": "Puck drives much of the confusion in A Midsummer Night's Dream." },
+    { "answer": "ARIEL", "clue": "Spirit servant in The Tempest", "note": "Ariel serves Prospero and longs for freedom." },
+    { "answer": "JULIET", "clue": "Young Capulet lover", "note": "Juliet is often more decisive than Romeo." },
+    { "answer": "PROSPERO", "clue": "Exiled magician of The Tempest", "note": "Prospero's art is both power and renunciation." }
+  ]
+}
