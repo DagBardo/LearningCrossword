@@ -245,35 +245,25 @@ function canPlace(grid, word, row, col, direction, size) {
     const c = col + dc * i;
     const existing = grid[r][c];
 
-    if (existing && existing !== word[i]) {
-      return false;
+    if (existing && existing !== word[i]) return false;
+
+    if (existing === word[i]) {
+      crossings++;
+      continue;
     }
 
-if (existing === word[i]) {
-  crossings++;
-  continue;
-}
-
-// Prevent fake extensions of across/down answers.
-// A newly placed letter may not sit immediately before or after
-// an existing same-row/same-column run unless it is part of this word.
-if (direction === "across") {
-  if (i === 0 && inside(r, c - 1, size) && grid[r][c - 1]) return false;
-  if (i === word.length - 1 && inside(r, c + 1, size) && grid[r][c + 1]) return false;
-} else {
-  if (i === 0 && inside(r - 1, c, size) && grid[r - 1][c]) return false;
-  if (i === word.length - 1 && inside(r + 1, c, size) && grid[r + 1][c]) return false;
-}
+    if (direction === "across") {
+      if (inside(r - 1, c, size) && grid[r - 1][c]) return false;
+      if (inside(r + 1, c, size) && grid[r + 1][c]) return false;
+    } else {
+      if (inside(r, c - 1, size) && grid[r][c - 1]) return false;
+      if (inside(r, c + 1, size) && grid[r][c + 1]) return false;
+    }
+  }
 
   return crossings > 0;
 }
-if (direction === "across") {
-  if (inside(r - 1, c, size) && grid[r - 1][c]) return false;
-  if (inside(r + 1, c, size) && grid[r + 1][c]) return false;
-} else {
-  if (inside(r, c - 1, size) && grid[r][c - 1]) return false;
-  if (inside(r, c + 1, size) && grid[r][c + 1]) return false;
-}
+
 function scorePlacement(grid, word, row, col, direction, size) {
   const dr = direction === "down" ? 1 : 0;
   const dc = direction === "across" ? 1 : 0;
