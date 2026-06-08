@@ -35,43 +35,6 @@ export function constructPuzzle(puzzle) {
   };
 }
 
-function countEntryCrossings(grid, entry) {
-  let crossings = 0;
-
-  const dr = entry.direction === "down" ? 1 : 0;
-  const dc = entry.direction === "across" ? 1 : 0;
-
-  for (let i = 0; i < entry.answer.length; i++) {
-    const r = entry.row + dr * i;
-    const c = entry.col + dc * i;
-
-    const hasHorizontal =
-      (c > 0 && grid[r][c - 1]) ||
-      (c < grid.length - 1 && grid[r][c + 1]);
-
-    const hasVertical =
-      (r > 0 && grid[r - 1][c]) ||
-      (r < grid.length - 1 && grid[r + 1][c]);
-
-    if (hasHorizontal && hasVertical) crossings++;
-  }
-
-  return crossings;
-}
-
-function weakEntryPenalty(layout) {
-  let penalty = 0;
-
-  for (const entry of layout.entries) {
-    const crossings = countEntryCrossings(layout.grid, entry);
-
-    if (crossings === 0) penalty += 300;
-    if (crossings === 1) penalty += 80;
-  }
-
-  return penalty;
-}
-
 function buildLayout(words, seed, seedDirection, size) {
   const grid = emptyGrid(size);
   const entries = [];
@@ -97,7 +60,7 @@ function buildLayout(words, seed, seedDirection, size) {
 
   let progress = true;
 
-  while (progress && entries.length < 20) {
+  while (progress && entries.length < 18) {
     progress = false;
     let bestCandidate = null;
 
@@ -297,45 +260,20 @@ function scorePlacement(grid, word, row, col, direction, size) {
 }
 
 function scorePartialLayout(layout, size) {
-  const placed = layout.entries.length;
-  const crossings = countCrossings(layout.grid);
-  const box = boundingBoxPenalty(layout.grid, size);
-  const balance = directionBalanceBonus(layout.entries);
-  const density = crossings / Math.max(1, placed);
-
   return (
-    placed * 160 +
-    crossings * 80 +
-    density * 120 +
-    balance -
-    box * 2
+    layout.entries.length * 120 +
+    countCrossings(layout.grid) * 40 -
+    boundingBoxPenalty(layout.grid, size)
   );
 }
+
 function scoreLayout(layout, size) {
-  const placed = layout.entries.length;
-  const crossings = countCrossings(layout.grid);
-  const box = boundingBoxPenalty(layout.grid, size);
-  const disconnected = disconnectedPenalty(layout.grid);
-  const balance = directionBalanceBonus(layout.entries);
-  const density = crossings / Math.max(1, placed);
-
-return (
-  placed * 240 +
-  crossings * 120 +
-  density * 200 +
-  balance -
-  box * 3 -
-  disconnected * 500 -
-  weakEntryPenalty(layout)
-);
-}
-
-function directionBalanceBonus(entries) {
-  const across = entries.filter(entry => entry.direction === "across").length;
-  const down = entries.filter(entry => entry.direction === "down").length;
-  const difference = Math.abs(across - down);
-
-  return Math.max(0, 100 - difference * 25);
+  return (
+    layout.entries.length * 200 +
+    countCrossings(layout.grid) * 60 -
+    boundingBoxPenalty(layout.grid, size) -
+    disconnectedPenalty(layout.grid) * 100
+  );
 }
 
 function countCrossings(grid) {
