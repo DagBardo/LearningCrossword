@@ -54,12 +54,11 @@ button { cursor: pointer; background: #1f1f1f; color: #fff; border-color: #1f1f1
   color: var(--muted);
 }
 .mobile-input {
-  position: fixed;
-  left: -1000px;
-  top: -1000px;
+  position: absolute;
+  opacity: 0;
   width: 1px;
   height: 1px;
-  opacity: 0;
+  pointer-events: none;
 }
 
 .status {
