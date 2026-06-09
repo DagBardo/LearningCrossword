@@ -1,5 +1,5 @@
 export class CrosswordRenderer {
-  constructor({ gridEl, acrossEl, downEl, statusEl, metaEl, notesEl, studyContentEl }) {
+constructor({ gridEl, acrossEl, downEl, statusEl, metaEl, notesEl, studyContentEl, mobileInputEl }) {
     this.gridEl = gridEl;
     this.acrossEl = acrossEl;
     this.downEl = downEl;
@@ -11,6 +11,7 @@ export class CrosswordRenderer {
     this.numbering = null;
     this.activeEntry = null;
     this.activeDirection = "across";
+    this.mobileInputEl = mobileInputEl;
     this.studyContentEl = studyContentEl;
   }
 getActiveEntry() {
@@ -384,6 +385,10 @@ selectCell(cell) {
 
   cell.classList.add("selected");
   cell.focus({ preventScroll: true });
+  if (this.mobileInputEl) {
+  this.mobileInputEl.value = "";
+  this.mobileInputEl.focus({ preventScroll: true });
+}
 }
 
   moveFrom(cell, direction, delta) {
