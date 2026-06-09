@@ -3,20 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Local 12×12 Crossword Lab</title>
+  <title>Learning Crossword</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <main class="app">
     <header class="hero">
-      <h1>Local 12×12 Crossword Lab</h1>
-      <p>Static, local-first crossword prototype. No hosting service required.</p>
+      <h2>Learning Crossword</h2>
     </header>
 
 <section class="controls" aria-label="Puzzle controls">
   <label>
     Topic
-    <input id="topicInput" value="Martin Buber" placeholder="e.g., Buddhism, Shakespeare, Australian wildlife" />
+    <input id="topicInput" value="Shakespeare" placeholder="e.g., Buddhism, Shakespeare, Australian wildlife" />
   </label>
 
   <label>
@@ -30,12 +29,17 @@
     </select>
   </label>
 
+<div class="button-row">
   <button id="generateBtn">Generate Puzzle</button>
-  <button id="checkBtn">Check</button>
+</div>
+
+<div class="button-row">
   <button id="checkWordBtn">Check Word</button>
   <button id="revealWordBtn">Reveal Word</button>
-  <button id="revealBtn">Reveal</button>
+  <button id="checkBtn">Check Puzzle</button>
+  <button id="revealBtn">Reveal Puzzle</button>
   <button id="clearBtn">Clear</button>
+</div>
 </section>
 
  <section class="history">

@@ -89,7 +89,13 @@ function renderTopicHistory() {
     els.topicHistory.appendChild(button);
   }
 }
+function restoreLastTopic() {
+  const topics = getTopicHistory();
 
+  if (topics.length && !els.topicInput.value.trim()) {
+    els.topicInput.value = topics[0];
+  }
+}
 function countCrossings(grid) {
   let crossings = 0;
   const size = grid.length;
@@ -201,6 +207,9 @@ async function generatePuzzle() {
     setBusy(false);
   }
 }
+renderTopicHistory();
+restoreLastTopic();
+generatePuzzle();
 
 els.generateBtn.addEventListener("click", generatePuzzle);
 els.checkBtn.addEventListener("click", () => renderer.check());
