@@ -390,7 +390,7 @@ cellBelongsToEntry(cell, entry) {
     cell.classList.remove("correct", "incorrect");
   }
 
-selectCell(cell) {
+selectCell(cell, openKeyboard = true) {
   if (cell.classList.contains("inactive")) return;
 
   this.gridEl.querySelectorAll(".cell").forEach(item => {
@@ -399,10 +399,11 @@ selectCell(cell) {
 
   cell.classList.add("selected");
   cell.focus({ preventScroll: true });
-  if (this.mobileInputEl) {
-  this.mobileInputEl.value = "";
-  this.mobileInputEl.focus({ preventScroll: true });
-}
+
+  if (openKeyboard && this.mobileKeyboardEl) {
+    this.mobileKeyboardEl.value = "";
+    this.mobileKeyboardEl.focus({ preventScroll: true });
+  }
 }
 
   moveFrom(cell, direction, delta) {
@@ -475,7 +476,7 @@ highlightEntry(entry) {
     );
 
     if (first) {
-      this.selectCell(first);
+     this.selectCell(first, false);
     }
   }
 
