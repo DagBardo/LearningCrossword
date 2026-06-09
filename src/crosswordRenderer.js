@@ -173,7 +173,20 @@ renderGrid() {
         this.gridEl.appendChild(cell);
       }
     }
-  }
+if (this.mobileInputEl) {
+  this.mobileInputEl.oninput = () => {
+    const selected = this.gridEl.querySelector(".cell.selected");
+    const value = this.mobileInputEl.value.slice(-1).toUpperCase();
+
+    if (selected && /^[A-Z]$/.test(value)) {
+      this.setCellValue(selected, value);
+      this.moveFrom(selected, this.activeDirection, 1);
+    }
+
+    this.mobileInputEl.value = "";
+  };
+}
+}
 
 renderClues() {
   this.acrossEl.innerHTML = "";
