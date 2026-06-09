@@ -1,5 +1,5 @@
 export class CrosswordRenderer {
-constructor({ gridEl, acrossEl, downEl, statusEl, metaEl, notesEl, studyContentEl, mobileInputEl }) {
+constructor({ gridEl, acrossEl, downEl, statusEl, metaEl, notesEl, studyContentEl, mobileKetboardEl }) {
     this.gridEl = gridEl;
     this.acrossEl = acrossEl;
     this.downEl = downEl;
@@ -11,7 +11,7 @@ constructor({ gridEl, acrossEl, downEl, statusEl, metaEl, notesEl, studyContentE
     this.numbering = null;
     this.activeEntry = null;
     this.activeDirection = "across";
-    this.mobileInputEl = mobileInputEl;
+    this.mobileKeyboardEl = mobileKeyboardEl;
     this.studyContentEl = studyContentEl;
   }
 getActiveEntry() {
