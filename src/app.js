@@ -1,6 +1,7 @@
 import { buildGridFromEntries, numberEntries } from "./puzzleEngine.js";
 import { CrosswordRenderer } from "./crosswordRenderer.js";
 import { constructPuzzle } from "./constructor.js";
+mobileInput: document.getElementById("mobileInput")
 
 const els = {
   topicInput: document.getElementById("topicInput"),
@@ -21,7 +22,7 @@ const els = {
   revealWordBtn: document.getElementById("revealWordBtn"),
   studyContent: document.getElementById("studyContent")
 };
-
+mobileInputEl: els.mobileInput
 const renderer = new CrosswordRenderer({
   gridEl: els.grid,
   acrossEl: els.acrossClues,
