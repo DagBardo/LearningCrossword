@@ -57,9 +57,9 @@ button { cursor: pointer; background: #1f1f1f; color: #fff; border-color: #1f1f1
   position: fixed;
   left: 8px;
   bottom: 8px;
-  width: 40px;
+  width: 120px;
   height: 40px;
-  opacity: 0.01;
+  opacity: 1;
   z-index: 9999;
   font-size: 16px;
 }
