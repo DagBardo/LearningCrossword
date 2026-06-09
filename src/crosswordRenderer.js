@@ -164,7 +164,7 @@ renderGrid() {
         cell.appendChild(letter);
 
         cell.addEventListener("click", () => {
-          this.selectCell(cell);
+          this.selectCell(cell, true);
         });
 
         cell.addEventListener("keydown", event => {
