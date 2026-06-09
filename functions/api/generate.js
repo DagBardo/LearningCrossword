@@ -86,6 +86,8 @@ export async function onRequestPost(context) {
       "Notes must not repeat the answer directly or indirectly.",
       "Notes should explain significance, context, history, or usage without naming the answer.",
       "Bad note: 'Sangha is one of the Three Jewels of Buddhism.'",
+      "Do not shorten play titles, genres, names, or concepts. For example, do not use MIDSUM for Midsummer or COMED for comedy.",
+      "Every answer must be a complete accepted word or complete proper name, not a prefix.",
       "Good note: 'One of the Three Jewels, referring to the community of practitioners.'"
     ],
     schema: {
@@ -163,7 +165,9 @@ export async function onRequestPost(context) {
     "MALVOL",
     "INTERV",
     "MEDITA",
-    "MINDFULL"
+    "MINDFULL",
+    "MIDSUM",
+    "COMED"
   ]);
 
   puzzle.entries = puzzle.entries
