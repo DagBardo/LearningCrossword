@@ -53,14 +53,16 @@ button { cursor: pointer; background: #1f1f1f; color: #fff; border-color: #1f1f1
   margin-bottom: 10px;
   color: var(--muted);
 }
-.mobile-input {
-  position: absolute;
-  opacity: 0;
-  width: 1px;
-  height: 1px;
-  pointer-events: none;
+.mobile-keyboard {
+  position: fixed;
+  left: 8px;
+  bottom: 8px;
+  width: 40px;
+  height: 40px;
+  opacity: 0.01;
+  z-index: 9999;
+  font-size: 16px;
 }
-
 .status {
   min-height: 24px;
   margin-bottom: 10px;
