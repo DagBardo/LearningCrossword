@@ -108,7 +108,8 @@ revealWord() {
   this.setStatus(`Revealed ${entry.number} ${entry.direction}.`);
 }
   render({ puzzle, grid, numbering }) {
-    this.puzzle = puzzle;
+
+      this.puzzle = puzzle;
     this.grid = grid;
     this.numbering = numbering;
     this.activeEntry = null;
