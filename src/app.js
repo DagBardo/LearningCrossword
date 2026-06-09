@@ -20,6 +20,7 @@ const els = {
   topicHistory: document.getElementById("topicHistory"),
   checkWordBtn: document.getElementById("checkWordBtn"),
   revealWordBtn: document.getElementById("revealWordBtn"),
+  mobileInput: document.getElementById("mobileInput"),
   studyContent: document.getElementById("studyContent")
 };
 mobileInputEl: els.mobileInput
