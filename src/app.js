@@ -31,7 +31,8 @@ const renderer = new CrosswordRenderer({
   statusEl: els.status,
   metaEl: els.meta,
   notesEl: els.answerNotes,
-  studyContentEl: els.studyContent
+  studyContentEl: els.studyContent,
+  mobileInputEl: els.mobileInput
 });
 
 function setBusy(isBusy) {
