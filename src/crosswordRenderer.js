@@ -174,17 +174,17 @@ renderGrid() {
         this.gridEl.appendChild(cell);
       }
     }
-if (this.mobileInputEl) {
-  this.mobileInputEl.oninput = () => {
+if (this.mobileKeyboardEl) {
+  this.mobileKeyboardEl.oninput = () => {
     const selected = this.gridEl.querySelector(".cell.selected");
-    const value = this.mobileInputEl.value.slice(-1).toUpperCase();
+    const value = this.mobileKeyboardEl.value.slice(-1).toUpperCase();
 
     if (selected && /^[A-Z]$/.test(value)) {
       this.setCellValue(selected, value);
       this.moveFrom(selected, this.activeDirection, 1);
     }
 
-    this.mobileInputEl.value = "";
+    this.mobileKeyboardEl.value = "";
   };
 }
 }
