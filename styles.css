@@ -61,12 +61,12 @@ button { cursor: pointer; background: #1f1f1f; color: #fff; border-color: #1f1f1
   color: var(--muted);
 }
 .mobile-keyboard {
-  position: static;
-  width: 90%;
-  height: 44px;
-  opacity: 1;
-  font-size: 18px;
-  margin: 12px;
+  position: fixed;
+  left: -1000px;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
 }
 .status {
   min-height: 24px;
