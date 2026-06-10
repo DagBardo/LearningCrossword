@@ -50,13 +50,13 @@ export async function onRequestPost(context) {
     }
   };
 
-  const entryCountByDifficulty = {
-    1: "18 to 24 entries.",
-    2: "20 to 26 entries.",
-    3: "22 to 28 entries.",
-    4: "26 to 32 entries.",
-    5: "30 to 36 entries."
-  };
+const entryCountByDifficulty = {
+  1: "14 to 18 entries.",
+  2: "16 to 20 entries.",
+  3: "18 to 22 entries.",
+  4: "20 to 24 entries.",
+  5: "22 to 26 entries."
+};
 
   const rule = difficultyRules[difficulty] || difficultyRules[3];
 
@@ -172,22 +172,22 @@ export async function onRequestPost(context) {
     "CROCOD",
     "KOOKAB",
     "KANGARO",
+    "WALLAB",
+    'TASMAN",
     "COMED"
   ]);
 
-  function isLikelyFragment(entry) {
-  const answer = entry.answer;
-  const text = `${entry.clue} ${entry.note}`
-    .toUpperCase()
-    .replace(/[^A-Z]+/g, " ");
+function isLikelyFragment(entry) {
+  const answer = entry.answer.toUpperCase();
 
-  return text
-    .split(/\s+/)
-    .some(word =>
-      word.length > answer.length &&
-      word.startsWith(answer) &&
-      word.length - answer.length >= 2
-    );
+  const text = `${entry.clue} ${entry.note}`.toUpperCase();
+
+  const words = text.match(/[A-Z]+/g) || [];
+
+  return words.some(word =>
+    word.length > answer.length &&
+    word.startsWith(answer)
+  );
 }
   
   puzzle.entries = puzzle.entries
