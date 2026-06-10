@@ -179,7 +179,8 @@ const entryCountByDifficulty = {
   "BANDIC",
   "REGOLI",
   "LUNARY",
-  "WOMBA"
+  "WOMBA",
+  "SOVERE"
 ]);
 
 function isLikelyFragment(entry) {
@@ -225,7 +226,7 @@ function hasSuspiciousEnding(answer) {
 .filter(entry => entry.answer.length <= 8)
 .filter(entry => !banned.has(entry.answer))
 .filter(entry => !isLikelyFragment(entry))
-.filter(entry => !hasSuspiciousEnding(entry.answer))
+// .filter(entry => !hasSuspiciousEnding(entry.answer))
 .filter(entry => entry.clue)
 .filter(entry => entry.note);
 
