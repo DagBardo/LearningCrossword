@@ -18,35 +18,35 @@ export async function onRequestPost(context) {
       answerStyle: "common, concrete, familiar terms",
       clueStyle: "direct definition clues",
       noteStyle: "simple one-sentence explanations",
-      answerLength: "mostly 4 to 6 letters"
+      answerLength: "prefer 4 to 7 letters; 8 letters only when necessary"
     },
     2: {
       label: "gentle",
       answerStyle: "familiar terms plus a few topic-specific terms",
       clueStyle: "mostly direct clues with mild indirection",
       noteStyle: "brief educational notes",
-      answerLength: "mostly 4 to 7 letters"
+      answerLength: "prefer 4 to 7 letters; 8 letters only when necessary"
     },
     3: {
       label: "medium",
       answerStyle: "topic-specific terms, names, concepts, and places",
       clueStyle: "knowledge-based clues, not giveaway clues",
       noteStyle: "substantive one-sentence notes",
-      answerLength: "mostly 5 to 8 letters"
+      answerLength: "prefer 4 to 7 letters; 8 letters only when necessary"
     },
     4: {
       label: "hard",
       answerStyle: "specialized, less obvious, or historically specific terms",
       clueStyle: "indirect clues requiring topic knowledge",
       noteStyle: "compact but intellectually specific notes",
-      answerLength: "mostly 5 to 8 letters"
+      answerLength: "prefer 4 to 7 letters; 8 letters only when necessary"
     },
     5: {
       label: "fiendish",
       answerStyle: "obscure, specialist, allusive, or second-order topic terms",
       clueStyle: "indirect, elliptical, or allusive clues; avoid simple definitions",
       noteStyle: "dense notes that explain why the term matters",
-      answerLength: "mostly 5 to 8 letters"
+      answerLength: "prefer 4 to 7 letters; 8 letters only when necessary"
     }
   };
 
@@ -76,11 +76,11 @@ export async function onRequestPost(context) {
       "Answers must be real, complete dictionary words or complete proper names.",
       "Answers must be complete single words, A-Z only, 4 to 8 letters.",
       "Prefer answers of 4 to 7 letters.",
-      "Never truncate a word to fit the length limit.",
-      "Never use fragments, stems, abbreviations, or partial words.",
+      "Use 8-letter answers sparingly.",
+      "Do not shorten longer words to meet the length limit.",
+      "If a term is longer than 8 letters, choose a different complete word.",
       "Bad answers include: FOLKLO, SYMPHO, SONGWR, ARPEGG, CRESC, FALSTA, MALVOL, INTERV, MEDITA, MINDFULL.",
       "Good alternatives include: FOLK, SONG, LYRIC, CHORD, SCALE, SONATA, FUGUE, TIMBRE, MELODY, RHYTHM.",
-      "If a relevant term is too long, choose a shorter complete related term.",
       "Each entry needs answer, clue, note.",
       "Notes must not contain the answer word.",
       "Notes must not repeat the answer directly or indirectly.",
