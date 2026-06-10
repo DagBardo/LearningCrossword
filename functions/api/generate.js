@@ -88,6 +88,8 @@ export async function onRequestPost(context) {
       "Bad note: 'Sangha is one of the Three Jewels of Buddhism.'",
       "Do not shorten play titles, genres, names, or concepts. For example, do not use MIDSUM for Midsummer or COMED for comedy.",
       "Every answer must be a complete accepted word or complete proper name, not a prefix.",
+      "Never use prefixes of longer words. Bad: CROCOD for CROCODILE, KOOKAB for KOOKABURRA, KANGARO for KANGAROO.",
+      "Use a shorter complete alternative instead, such as DINGO, EMU, KOALA, OPAL, REEF, BILBY.",
       "Good note: 'One of the Three Jewels, referring to the community of practitioners.'"
     ],
     schema: {
@@ -167,9 +169,27 @@ export async function onRequestPost(context) {
     "MEDITA",
     "MINDFULL",
     "MIDSUM",
+    "CROCOD",
+    "KOOKAB",
+    "KANGARO",
     "COMED"
   ]);
 
+  function isLikelyFragment(entry) {
+  const answer = entry.answer;
+  const text = `${entry.clue} ${entry.note}`
+    .toUpperCase()
+    .replace(/[^A-Z]+/g, " ");
+
+  return text
+    .split(/\s+/)
+    .some(word =>
+      word.length > answer.length &&
+      word.startsWith(answer) &&
+      word.length - answer.length >= 2
+    );
+}
+  
   puzzle.entries = puzzle.entries
     .map(entry => {
       const answer = String(entry.answer || "")
@@ -186,6 +206,7 @@ export async function onRequestPost(context) {
     .filter(entry => entry.answer.length <= 8)
     .filter(entry => !banned.has(entry.answer))
     .filter(entry => entry.clue)
+    .filter(entry => !isLikelyFragment(entry))
     .filter(entry => entry.note);
 
   for (const entry of puzzle.entries) {
