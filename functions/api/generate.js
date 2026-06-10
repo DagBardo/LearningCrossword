@@ -10,6 +10,9 @@ export async function onRequestPost(context) {
  
   const body = await context.request.json().catch(() => ({}));
   const topic = body.topic || "General knowledge";
+  const topicRoot = topic
+  .toUpperCase()
+  .replace(/[^A-Z]/g, "");
   const difficulty = Number(body.difficulty || 2);
 
   const difficultyRules = {
@@ -183,7 +186,14 @@ const entryCountByDifficulty = {
   "SOVERE"
 ]);
 
-function isLikelyFragment(entry) {
+function isTopicFragment(answer, topicRoot) {
+  return (
+    topicRoot.length > answer.length + 2 &&
+    topicRoot.startsWith(answer)
+  );
+}
+  
+  function isLikelyFragment(entry) {
   const answer = entry.answer.toUpperCase();
 
   const text = `${entry.clue} ${entry.note}`
@@ -225,6 +235,7 @@ function hasSuspiciousEnding(answer) {
 .filter(entry => entry.answer.length >= 4)
 .filter(entry => entry.answer.length <= 8)
 .filter(entry => !banned.has(entry.answer))
+.filter(entry => !isTopicFragment(entry.answer, topicRoot))
 .filter(entry => !isLikelyFragment(entry))
 // .filter(entry => !hasSuspiciousEnding(entry.answer))
 .filter(entry => entry.clue)
