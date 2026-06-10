@@ -9,6 +9,8 @@ const els = {
   checkBtn: document.getElementById("checkBtn"),
   revealBtn: document.getElementById("revealBtn"),
   clearBtn: document.getElementById("clearBtn"),
+  checkWordBtn: document.getElementById("checkWordBtn"),
+  revealWordBtn: document.getElementById("revealWordBtn"),
   grid: document.getElementById("grid"),
   acrossClues: document.getElementById("acrossClues"),
   downClues: document.getElementById("downClues"),
@@ -17,9 +19,8 @@ const els = {
   metrics: document.getElementById("metrics"),
   answerNotes: document.getElementById("answerNotes"),
   topicHistory: document.getElementById("topicHistory"),
-  checkWordBtn: document.getElementById("checkWordBtn"),
-  revealWordBtn: document.getElementById("revealWordBtn"),
-  studyContent: document.getElementById("studyContent")
+  studyContent: document.getElementById("studyContent"),
+  mobileKeyboard: document.getElementById("mobileKeyboard")
 };
 
 const renderer = new CrosswordRenderer({
@@ -29,7 +30,8 @@ const renderer = new CrosswordRenderer({
   statusEl: els.status,
   metaEl: els.meta,
   notesEl: els.answerNotes,
-  studyContentEl: els.studyContent
+  studyContentEl: els.studyContent,
+  mobileKeyboardEl: els.mobileKeyboard
 });
 
 function setBusy(isBusy) {
@@ -76,7 +78,6 @@ function renderTopicHistory() {
 
   for (const topic of topics) {
     const button = document.createElement("button");
-
     button.type = "button";
     button.className = "history-button";
     button.textContent = topic;
@@ -89,6 +90,7 @@ function renderTopicHistory() {
     els.topicHistory.appendChild(button);
   }
 }
+
 function restoreLastTopic() {
   const topics = getTopicHistory();
 
@@ -96,6 +98,7 @@ function restoreLastTopic() {
     els.topicInput.value = topics[0];
   }
 }
+
 function countCrossings(grid) {
   let crossings = 0;
   const size = grid.length;
@@ -137,21 +140,21 @@ function renderMetrics({ sourcePuzzle, puzzle, grid }) {
     quality = "Strong";
   }
 
-const placedAnswers = new Set(
-  puzzle.entries.map(entry =>
-    String(entry.answer)
-      .toUpperCase()
-      .replace(/[^A-Z]/g, "")
-  )
-);
+  const placedAnswers = new Set(
+    puzzle.entries.map(entry =>
+      String(entry.answer)
+        .toUpperCase()
+        .replace(/[^A-Z]/g, "")
+    )
+  );
 
-const unusedWords = sourcePuzzle.entries
-  .map(entry =>
-    String(entry.answer)
-      .toUpperCase()
-      .replace(/[^A-Z]/g, "")
-  )
-  .filter(answer => !placedAnswers.has(answer));
+  const unusedWords = sourcePuzzle.entries
+    .map(entry =>
+      String(entry.answer)
+        .toUpperCase()
+        .replace(/[^A-Z]/g, "")
+    )
+    .filter(answer => !placedAnswers.has(answer));
 
   els.metrics.innerHTML = `
     <div>
@@ -207,9 +210,6 @@ async function generatePuzzle() {
     setBusy(false);
   }
 }
-renderTopicHistory();
-restoreLastTopic();
-generatePuzzle();
 
 els.generateBtn.addEventListener("click", generatePuzzle);
 els.checkBtn.addEventListener("click", () => renderer.check());
@@ -217,5 +217,7 @@ els.revealBtn.addEventListener("click", () => renderer.reveal());
 els.clearBtn.addEventListener("click", () => renderer.clear());
 els.checkWordBtn.addEventListener("click", () => renderer.checkWord());
 els.revealWordBtn.addEventListener("click", () => renderer.revealWord());
+
 renderTopicHistory();
+restoreLastTopic();
 generatePuzzle();

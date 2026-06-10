@@ -6,7 +6,7 @@
   <title>Learning Crossword</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+  <body>
   <main class="app">
     <header class="hero">
       <h2>Learning Crossword</h2>
@@ -15,7 +15,7 @@
 <section class="controls" aria-label="Puzzle controls">
   <label>
     Topic
-    <input id="topicInput" value="Shakespeare" placeholder="e.g., Buddhism, Shakespeare, Australian wildlife" />
+    <input id="topicInput" value="" placeholder="e.g., Shakespeare, Australian wildlife" />
   </label>
 
   <label>
@@ -46,7 +46,6 @@
   <h2>Recent Topics</h2>
   <div id="topicHistory" class="topic-history"></div>
 </section>
-
     <section class="meta" id="meta"></section>
     <section class="status" id="status" role="status" aria-live="polite"></section>
     <section class="metrics" id="metrics"></section>
@@ -75,7 +74,12 @@
   <div id="answerNotes"></div>
 </section>
   </main>
-
+<input
+  id="mobileKeyboard"
+  class="mobile-keyboard"
+  autocomplete="off"
+  autocapitalize="characters"
+/>
 <script type="module" src="src/app.js?v=20"></script>
 </body>
 </html>

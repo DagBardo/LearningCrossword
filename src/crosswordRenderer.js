@@ -1,5 +1,5 @@
 export class CrosswordRenderer {
-  constructor({ gridEl, acrossEl, downEl, statusEl, metaEl, notesEl, studyContentEl }) {
+constructor({ gridEl, acrossEl, downEl, statusEl, metaEl, notesEl, studyContentEl, mobileKeyboardEl }) {
     this.gridEl = gridEl;
     this.acrossEl = acrossEl;
     this.downEl = downEl;
@@ -11,6 +11,7 @@ export class CrosswordRenderer {
     this.numbering = null;
     this.activeEntry = null;
     this.activeDirection = "across";
+    this.mobileKeyboardEl = mobileKeyboardEl;
     this.studyContentEl = studyContentEl;
   }
 getActiveEntry() {
@@ -107,7 +108,8 @@ revealWord() {
   this.setStatus(`Revealed ${entry.number} ${entry.direction}.`);
 }
   render({ puzzle, grid, numbering }) {
-    this.puzzle = puzzle;
+
+      this.puzzle = puzzle;
     this.grid = grid;
     this.numbering = numbering;
     this.activeEntry = null;
@@ -162,7 +164,7 @@ renderGrid() {
         cell.appendChild(letter);
 
         cell.addEventListener("click", () => {
-          this.selectCell(cell);
+          this.selectCell(cell, true);
         });
 
         cell.addEventListener("keydown", event => {
@@ -172,7 +174,20 @@ renderGrid() {
         this.gridEl.appendChild(cell);
       }
     }
-  }
+if (this.mobileKeyboardEl) {
+  this.mobileKeyboardEl.oninput = () => {
+    const selected = this.gridEl.querySelector(".cell.selected");
+    const value = this.mobileKeyboardEl.value.slice(-1).toUpperCase();
+
+    if (selected && /^[A-Z]$/.test(value)) {
+      this.setCellValue(selected, value);
+      this.moveFrom(selected, this.activeDirection, 1);
+    }
+
+    this.mobileKeyboardEl.value = "";
+  };
+}
+}
 
 renderClues() {
   this.acrossEl.innerHTML = "";
@@ -375,7 +390,7 @@ cellBelongsToEntry(cell, entry) {
     cell.classList.remove("correct", "incorrect");
   }
 
-selectCell(cell) {
+selectCell(cell, openKeyboard = true) {
   if (cell.classList.contains("inactive")) return;
 
   this.gridEl.querySelectorAll(".cell").forEach(item => {
@@ -384,6 +399,11 @@ selectCell(cell) {
 
   cell.classList.add("selected");
   cell.focus({ preventScroll: true });
+
+  if (openKeyboard && this.mobileKeyboardEl) {
+    this.mobileKeyboardEl.value = "";
+    this.mobileKeyboardEl.focus({ preventScroll: true });
+  }
 }
 
   moveFrom(cell, direction, delta) {
@@ -456,7 +476,7 @@ highlightEntry(entry) {
     );
 
     if (first) {
-      this.selectCell(first);
+     this.selectCell(first, false);
     }
   }
 
