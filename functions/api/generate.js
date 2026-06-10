@@ -72,7 +72,7 @@ const entryCountByDifficulty = {
     requirements: [
       "Return only JSON.",
       "No markdown.",
-      entryCountByDifficulty[difficulty] || "22 to 28 entries.",
+
       "Answers must be real, complete dictionary words or complete proper names.",
       "Answers must be complete single words, A-Z only, 4 to 8 letters.",
       "Prefer answers of 4 to 7 letters.",
@@ -88,9 +88,10 @@ const entryCountByDifficulty = {
       "Bad note: 'Sangha is one of the Three Jewels of Buddhism.'",
       "Do not shorten play titles, genres, names, or concepts. For example, do not use MIDSUM for Midsummer or COMED for comedy.",
       "Every answer must be a complete accepted word or complete proper name, not a prefix.",
-      "Never use prefixes of longer words. Bad: CROCOD for CROCODILE, KOOKAB for KOOKABURRA, KANGARO for KANGAROO.",
-      "Use a shorter complete alternative instead, such as DINGO, EMU, KOALA, OPAL, REEF, BILBY.",
-      "Good note: 'One of the Three Jewels, referring to the community of practitioners.'"
+     "Never use prefixes of longer words.",
+     "Bad answers include: KANGAR, KOOKA, WALLAB, BANDIC, REGOLI, LUNARY.",
+     "Good alternatives include complete words such as DINGO, KOALA, EMU, OPAL, REEF, BILBY, FROG, FISH.",
+     "Every answer must look like a complete word to a human solver."
     ],
     schema: {
       title: topic,
@@ -157,37 +158,55 @@ const entryCountByDifficulty = {
   puzzle.size = 12;
   puzzle.entries = Array.isArray(puzzle.entries) ? puzzle.entries : [];
 
-  const banned = new Set([
-    "FOLKLO",
-    "SYMPHO",
-    "SONGWR",
-    "ARPEGG",
-    "CRESC",
-    "FALSTA",
-    "MALVOL",
-    "INTERV",
-    "MEDITA",
-    "MINDFULL",
-    "MIDSUM",
-    "CROCOD",
-    "KOOKAB",
-    "KANGARO",
-    "WALLAB",
-    'TASMAN",
-    "COMED"
-  ]);
+ const banned = new Set([
+  "FOLKLO",
+  "SYMPHO",
+  "SONGWR",
+  "ARPEGG",
+  "CRESC",
+  "FALSTA",
+  "MALVOL",
+  "INTERV",
+  "MEDITA",
+  "MINDFULL",
+  "MIDSUM",
+  "COMED",
+  "CROCOD",
+  "KOOKAB",
+  "KOOKA",
+  "KANGAR",
+  "WALLAB",
+  "BANDIC",
+  "REGOLI",
+  "LUNARY",
+  "WOMBA"
+]);
 
 function isLikelyFragment(entry) {
   const answer = entry.answer.toUpperCase();
 
-  const text = `${entry.clue} ${entry.note}`.toUpperCase();
+  const text = `${entry.clue} ${entry.note}`
+    .toUpperCase()
+    .replace(/[^A-Z]+/g, " ");
 
   const words = text.match(/[A-Z]+/g) || [];
 
   return words.some(word =>
     word.length > answer.length &&
-    word.startsWith(answer)
+    word.startsWith(answer) &&
+    word.length - answer.length >= 2
   );
+}
+
+function hasSuspiciousEnding(answer) {
+  return [
+    "AR",   // KANGAR
+    "AB",   // WALLAB
+    "IC",   // BANDIC
+    "LI",   // REGOLI
+    "BA",   // REDBA
+    "KA"    // KOOKA
+  ].some(suffix => answer.endsWith(suffix));
 }
   
   puzzle.entries = puzzle.entries
@@ -202,12 +221,13 @@ function isLikelyFragment(entry) {
         note: String(entry.note || "").trim()
       };
     })
-    .filter(entry => entry.answer.length >= 4)
-    .filter(entry => entry.answer.length <= 8)
-    .filter(entry => !banned.has(entry.answer))
-    .filter(entry => entry.clue)
-    .filter(entry => !isLikelyFragment(entry))
-    .filter(entry => entry.note);
+.filter(entry => entry.answer.length >= 4)
+.filter(entry => entry.answer.length <= 8)
+.filter(entry => !banned.has(entry.answer))
+.filter(entry => !isLikelyFragment(entry))
+.filter(entry => !hasSuspiciousEnding(entry.answer))
+.filter(entry => entry.clue)
+.filter(entry => entry.note);
 
   for (const entry of puzzle.entries) {
     if (entry.note.toUpperCase().includes(entry.answer)) {
