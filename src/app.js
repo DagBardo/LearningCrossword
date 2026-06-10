@@ -1,7 +1,7 @@
 import { buildGridFromEntries, numberEntries } from "./puzzleEngine.js";
 import { CrosswordRenderer } from "./crosswordRenderer.js";
 import { constructPuzzle } from "./constructor.js";
-mobileInput: document.getElementById("mobileInput")
+mobileKeyBoard: document.getElementById("mobileKeyBoard")
 
 const els = {
   topicInput: document.getElementById("topicInput"),
@@ -20,10 +20,10 @@ const els = {
   topicHistory: document.getElementById("topicHistory"),
   checkWordBtn: document.getElementById("checkWordBtn"),
   revealWordBtn: document.getElementById("revealWordBtn"),
-  mobileInput: document.getElementById("mobileInput"),
+  mobileKeyBoard: document.getElementById("mobileKeyBoard"),
   studyContent: document.getElementById("studyContent")
 };
-mobileInputEl: els.mobileInput
+mobileKeyboardEl: els.mobileKeyboard
 const renderer = new CrosswordRenderer({
   gridEl: els.grid,
   acrossEl: els.acrossClues,
@@ -32,7 +32,7 @@ const renderer = new CrosswordRenderer({
   metaEl: els.meta,
   notesEl: els.answerNotes,
   studyContentEl: els.studyContent,
-  mobileInputEl: els.mobileInput
+  mobileKeyBoardEl: els.mobileKeyBoard
 });
 
 function setBusy(isBusy) {
