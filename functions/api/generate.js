@@ -173,6 +173,11 @@ puzzle.title = `${puzzle.topic}: ${puzzle.theme}`;
     .filter(entry => entry.clue)
     .filter(entry => entry.note);
 
+puzzle.entries = await validateEntriesWithOpenAI({
+  apiKey,
+  entries: puzzle.entries
+});
+  
   for (const entry of puzzle.entries) {
     if (entry.note.toUpperCase().includes(entry.answer)) {
       entry.note =
@@ -233,4 +238,77 @@ function cleanLabel(value) {
     .replace(/^topic:\s*/i, "")
     .replace(/^theme:\s*/i, "")
     .trim();
+}
+async function validateEntriesWithOpenAI({ apiKey, entries }) {
+  if (!entries.length) return entries;
+
+  const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      model: "gpt-4o-mini",
+      temperature: 0,
+      response_format: { type: "json_object" },
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are a strict crossword answer validator. Remove invalid answers. Return only valid JSON."
+        },
+        {
+          role: "user",
+          content: JSON.stringify({
+            task: "Remove any entry whose answer is not a complete real dictionary word or complete proper name.",
+            rules: [
+              "Reject truncated words.",
+              "Reject stems, prefixes, fragments, abbreviations, and invented forms.",
+              "Reject answers like CULTUR, RENAI, SOVERE, KANGAR, WALLAB, REGOLI, ELOQUEN.",
+              "Keep valid complete words and proper names.",
+              "Do not rewrite answers.",
+              "Do not add new entries."
+            ],
+            schema: {
+              entries: [
+                {
+                  answer: "WORD",
+                  clue: "clue",
+                  note: "note"
+                }
+              ]
+            },
+            entries
+          })
+        }
+      ]
+    })
+  });
+
+  if (!response.ok) {
+    return entries;
+  }
+
+  try {
+    const data = await response.json();
+    const validated = JSON.parse(data.choices?.[0]?.message?.content || "{}");
+
+    if (!Array.isArray(validated.entries)) return entries;
+
+    return validated.entries
+      .map(entry => ({
+        answer: String(entry.answer || "")
+          .toUpperCase()
+          .replace(/[^A-Z]/g, ""),
+        clue: String(entry.clue || "").trim(),
+        note: String(entry.note || "").trim()
+      }))
+      .filter(entry => entry.answer.length >= 4)
+      .filter(entry => entry.answer.length <= 8)
+      .filter(entry => entry.clue)
+      .filter(entry => entry.note);
+  } catch {
+    return entries;
+  }
 }
