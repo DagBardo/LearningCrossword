@@ -1,3 +1,55 @@
+const TEMPLATE_12 = [
+  "##.....##..",
+  "#........#.",
+  "..........",
+  "....#.....",
+  "...###....",
+  "##.....##.",
+  "..........",
+  "..........",
+  "....#.....",
+  "...###....",
+  ".#........#",
+  "..##.....##"
+];
+
+function extractSlots(template) {
+  const slots = [];
+
+  // across
+  for (let r = 0; r < template.length; r++) {
+    let start = null;
+
+    for (let c = 0; c <= template[r].length; c++) {
+      const open =
+        c < template[r].length &&
+        template[r][c] === ".";
+
+      if (open && start === null) {
+        start = c;
+      }
+
+      if ((!open || c === template[r].length) && start !== null) {
+        const len = c - start;
+
+        if (len >= 4 && len <= 8) {
+          slots.push({
+            direction: "across",
+            row: r,
+            col: start,
+            length: len
+          });
+        }
+
+        start = null;
+      }
+    }
+  }
+
+  return slots;
+}
+console.log(extractSlots(TEMPLATE_12));
+
 export function constructPuzzle(puzzle) {
   const size = puzzle.size || 12;
 
