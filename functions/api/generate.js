@@ -14,8 +14,7 @@ export async function onRequestPost(context) {
   .toUpperCase()
   .replace(/[^A-Z]/g, "");
   const difficulty = Number(body.difficulty || 2);
-  const promptTopic =
-    topic || "Choose an interesting educational topic and focused theme.";
+  const promptTopic =  topic || "Choose an interesting educational topic and focused theme.";
   const difficultyRules = {
     1: {
       label: "easy",
