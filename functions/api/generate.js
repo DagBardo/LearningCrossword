@@ -65,7 +65,7 @@ export async function onRequestPost(context) {
     note_style: rule.noteStyle,
     answer_length: rule.answerLength,
     requirements: [
-      "Return only JSON.",
+      "Return only .",
       "No markdown.",
       "Choose a focused theme within the topic.",
       "Return a title that combines the topic and chosen theme.",
@@ -116,29 +116,31 @@ export async function onRequestPost(context) {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json"
+      "Content-Type": "application/"
     },
-    body: JSON.stringify({
+    body: .stringify({
       model: context.env.OPENAI_MODEL || "gpt-4o-mini",
       temperature: 0.7,
-      response_format: { type: "json_object" },
+      response_format: { type: "_object" },
       messages: [
         {
           role: "system",
           content:
-            "You generate clean JSON puzzle word banks for a crossword constructor. Return only valid JSON."
+            "You generate clean  puzzle word banks for a crossword constructor. Return only valid ."
         },
         {
           role: "user",
-          content: JSON.stringify(prompt)
+          content: .stringify(prompt)
         }
       ]
     })
   });
 
-  if (!response.ok) {
-    const text = await response.text();
-    return Response.json(
+  if (!response.ok) 
+  {
+    
+  const text = await response.text();
+    return Response.(
       { error: `OpenAI API error: ${text}` },
       { status: 500 }
     );
@@ -155,7 +157,12 @@ export async function onRequestPost(context) {
       { status: 500 }
     );
   }
-
+  
+console.log(
+  "Raw entries from OpenAI:",
+  puzzle.entries?.length || 0
+);
+  
   puzzle.title = puzzle.title || topic;
   puzzle.difficulty = puzzle.difficulty || difficulty;
   puzzle.style = puzzle.style || `Learning - ${rule.label}`;
@@ -248,7 +255,10 @@ function hasSuspiciousEnding(answer) {
         "This concept is important to the topic. Reveal the answer to learn more.";
     }
   }
-
+console.log(
+  "Entries after filtering:",
+  puzzle.entries.length
+);
   return Response.json(puzzle);
 }
 
