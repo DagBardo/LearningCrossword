@@ -53,18 +53,10 @@ export async function onRequestPost(context) {
     }
   };
 
-const entryCountByDifficulty = {
-  1: "14 to 18 entries.",
-  2: "16 to 20 entries.",
-  3: "18 to 22 entries.",
-  4: "20 to 24 entries.",
-  5: "22 to 26 entries."
-};
-
   const rule = difficultyRules[difficulty] || difficultyRules[3];
 
   const prompt = {
-    task: "Create a JSON word bank for a 12x12 educational crossword constructor.",
+    task: task: "Create a themed educational crossword word bank. Choose a focused subtheme within the requested topic.",
     topic,
     difficulty,
     difficulty_label: rule.label,
@@ -75,7 +67,14 @@ const entryCountByDifficulty = {
     requirements: [
       "Return only JSON.",
       "No markdown.",
-
+      "Choose a focused theme within the topic.",
+      "Return a title that combines the topic and chosen theme.",
+      "Return 35 to 45 candidate entries.",
+      "Each answer must be a complete real word or complete proper name.",
+      "Do not truncate, abbreviate, stem, or shorten any answer.",
+      "Difficulty should mostly affect clue indirectness and note sophistication, not answer length.",
+      "Use mostly answers of 4 to 8 letters.",
+      "Prefer short complete alternatives over fragments of long terms.",
       "Answers must be real, complete dictionary words or complete proper names.",
       "Answers must be complete single words, A-Z only, 4 to 8 letters.",
       "Prefer answers of 4 to 7 letters.",
@@ -96,20 +95,22 @@ const entryCountByDifficulty = {
      "Good alternatives include complete words such as DINGO, KOALA, EMU, OPAL, REEF, BILBY, FROG, FISH.",
      "Every answer must look like a complete word to a human solver."
     ],
-    schema: {
-      title: topic,
-      difficulty,
-      style: `Learning - ${rule.label}`,
-      size: 12,
-      entries: [
-        {
-          answer: "WORD",
-          clue: "Brief clue appropriate to difficulty",
-          note: "Short educational note"
-        }
-      ]
+   schema: {
+  title: `${topic}: chosen subtheme`,
+  topic,
+  theme: "Focused subtheme chosen by the model",
+  difficulty,
+  style: `Learning - ${rule.label}`,
+  size: 12,
+  entries: [
+    {
+      answer: "WORD",
+      clue: "Clue appropriate to difficulty",
+      note: "Educational note that does not reveal the answer",
+      difficulty: "easy | medium | hard"
     }
-  };
+  ]
+}
 
   const response = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
