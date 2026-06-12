@@ -118,6 +118,15 @@ export async function onRequestPost(context) {
     );
   }
 
+  puzzle.topic = cleanLabel(puzzle.topic || userTopic || "Surprise topic");
+  puzzle.theme = cleanLabel(puzzle.theme || "Selected theme");
+
+  if (!puzzle.theme || puzzle.theme.toLowerCase() === "theme") {
+  puzzle.theme = "Selected theme";
+}
+
+ puzzle.title = cleanLabel(puzzle.title || `${puzzle.topic}: ${puzzle.theme}`);
+  
   puzzle.topic = puzzle.topic || userTopic || "Surprise topic";
   puzzle.theme = puzzle.theme || "Selected theme";
   puzzle.title = puzzle.title || `${puzzle.topic}: ${puzzle.theme}`;
@@ -131,7 +140,7 @@ export async function onRequestPost(context) {
     "FALSTA", "MALVOL", "INTERV", "MEDITA", "MINDFULL",
     "MIDSUM", "COMED", "CROCOD", "KOOKAB", "KOOKA",
     "KANGAR", "WALLAB", "BANDIC", "REGOLI", "LUNARY",
-    "WOMBA", "SOVERE", "RENAI"
+    "WOMBA", "SOVERE", "RENAI", "ELOQUEN"
   ]);
 
   puzzle.entries = puzzle.entries
@@ -209,4 +218,10 @@ function wordQualityScore(word) {
   const eightLetterPenalty = length === 8 ? -2 : 0;
 
   return commonLengthBonus + vowels + eightLetterPenalty;
+}
+function cleanLabel(value) {
+  return String(value || "")
+    .replace(/^topic:\s*/i, "")
+    .replace(/^theme:\s*/i, "")
+    .trim();
 }
