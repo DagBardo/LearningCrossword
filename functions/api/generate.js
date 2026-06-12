@@ -10,11 +10,11 @@ export async function onRequestPost(context) {
  
   const body = await context.request.json().catch(() => ({}));
   const topic = body.topic?.trim();
+  const promptTopic =  topic || "Choose an interesting educational topic and focused theme.";
   const topicRoot = topic
   .toUpperCase()
   .replace(/[^A-Z]/g, "");
   const difficulty = Number(body.difficulty || 2);
-  const promptTopic =  topic || "Choose an interesting educational topic and focused theme.";
   const difficultyRules = {
     1: {
       label: "easy",
@@ -57,7 +57,7 @@ export async function onRequestPost(context) {
 
   const prompt = {
     task: task: "Create a themed educational crossword word bank. Choose a focused subtheme within the requested topic.",
-    topic,
+    promptTopic,
     difficulty,
     difficulty_label: rule.label,
     answer_style: rule.answerStyle,
@@ -163,7 +163,9 @@ console.log(
   puzzle.entries?.length || 0
 );
   
-  puzzle.title = puzzle.title || topic;
+  puzzle.topic = puzzle.topic || topic || "Surprise topic";
+  puzzle.theme = puzzle.theme || "Selected theme";
+  puzzle.title = puzzle.title || `${puzzle.topic}: ${puzzle.theme}`;
   puzzle.difficulty = puzzle.difficulty || difficulty;
   puzzle.style = puzzle.style || `Learning - ${rule.label}`;
   puzzle.size = 12;
