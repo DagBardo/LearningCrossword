@@ -50,6 +50,13 @@ function extractSlots(template) {
 }
 console.log(extractSlots(TEMPLATE_12));
 
+const slots = extractSlots(TEMPLATE_12);
+
+console.log(
+  "Template slots:",
+  slots.map(s => `${s.direction}:${s.length}`)
+);
+
 export function constructPuzzle(puzzle) {
   const size = puzzle.size || 12;
 
