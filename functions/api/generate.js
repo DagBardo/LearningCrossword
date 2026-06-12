@@ -127,9 +127,18 @@ export async function onRequestPost(context) {
 
  puzzle.title = cleanLabel(puzzle.title || `${puzzle.topic}: ${puzzle.theme}`);
   
-  puzzle.topic = puzzle.topic || userTopic || "Surprise topic";
-  puzzle.theme = puzzle.theme || "Selected theme";
-  puzzle.title = puzzle.title || `${puzzle.topic}: ${puzzle.theme}`;
+ puzzle.topic = cleanLabel(puzzle.topic);
+ puzzle.theme = cleanLabel(puzzle.theme);
+
+if (!puzzle.topic || /^topic$/i.test(puzzle.topic) || /^theme$/i.test(puzzle.topic)) {
+  puzzle.topic = userTopic || "Surprise topic";
+}
+
+if (!puzzle.theme || /^theme$/i.test(puzzle.theme) || /^selected theme$/i.test(puzzle.theme)) {
+  puzzle.theme = "Selected theme";
+}
+
+puzzle.title = `${puzzle.topic}: ${puzzle.theme}`;
   puzzle.difficulty = puzzle.difficulty || difficulty;
   puzzle.style = puzzle.style || `Learning - ${rule.label}`;
   puzzle.size = 12;
@@ -140,7 +149,7 @@ export async function onRequestPost(context) {
     "FALSTA", "MALVOL", "INTERV", "MEDITA", "MINDFULL",
     "MIDSUM", "COMED", "CROCOD", "KOOKAB", "KOOKA",
     "KANGAR", "WALLAB", "BANDIC", "REGOLI", "LUNARY",
-    "WOMBA", "SOVERE", "RENAI", "ELOQUEN"
+    "WOMBA", "SOVERE", "RENAI", "ELOQUEN", "ETYMOS"
   ]);
 
   puzzle.entries = puzzle.entries
