@@ -9,12 +9,13 @@ export async function onRequestPost(context) {
   }
  
   const body = await context.request.json().catch(() => ({}));
-  const topic = body.topic || "General knowledge";
+  const topic = body.topic?.trim();
   const topicRoot = topic
   .toUpperCase()
   .replace(/[^A-Z]/g, "");
   const difficulty = Number(body.difficulty || 2);
-
+  const promptTopic =
+    topic || "Choose an interesting educational topic and focused theme.";
   const difficultyRules = {
     1: {
       label: "easy",
