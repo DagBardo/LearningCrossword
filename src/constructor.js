@@ -1,16 +1,16 @@
 const TEMPLATE_12 = [
-  "##.....##..",
-  "#........#.",
-  "..........",
-  "....#.....",
-  "...###....",
-  "##.....##.",
-  "..........",
-  "..........",
-  "....#.....",
-  "...###....",
-  ".#........#",
-  "..##.....##"
+  "##......##..",
+  "#......#....",
+  "....#....#..",
+  "...#....#...",
+  "......##....",
+  "##....#.....",
+  ".....#....##",
+  "....##......",
+  "...#....#...",
+  "..#....#....",
+  "....#......#",
+  "..##......##"
 ];
 
 function extractSlots(template) {
@@ -65,8 +65,21 @@ export function constructPuzzle(puzzle) {
       ...entry,
       answer: clean(entry.answer)
     }))
-    .filter(entry => entry.answer.length >= 4 && entry.answer.length <= 10);
+    .filter(entry => entry.answer.length >= 4 && entry.answer.length <= 8);
 
+  const templateLayout = buildTemplateLayout(words, TEMPLATE_12);
+
+  if (
+    templateLayout.entries.length >= 10 &&
+    countCrossings(templateLayout.grid) >= 8
+  ) {
+    return {
+      ...puzzle,
+      entries: templateLayout.entries
+    };
+  }
+
+  // fallback to existing free-placement constructor
   const sorted = [...words].sort((a, b) => b.answer.length - a.answer.length);
 
   let bestLayout = null;
@@ -503,4 +516,144 @@ function clean(word) {
 
 function inside(row, col, size) {
   return row >= 0 && col >= 0 && row < size && col < size;
+}
+
+function buildTemplateLayout(words, template) {
+  const size = template.length;
+  const grid = emptyGrid(size);
+  const entries = [];
+
+  const slots = extractSlots(template)
+    .sort((a, b) => b.crosses - a.crosses || b.length - a.length);
+
+  const unused = [...words];
+
+  for (const slot of slots) {
+    const candidates = unused
+      .map(word => ({
+        word,
+        score: scoreWordForSlot(grid, word.answer, slot)
+      }))
+      .filter(item => item.word.answer.length === slot.length)
+      .filter(item => item.score > -Infinity)
+      .sort((a, b) => b.score - a.score);
+
+    if (!candidates.length) continue;
+
+    const chosen = candidates[0].word;
+
+    place(grid, chosen, slot.row, slot.col, slot.direction);
+
+    entries.push({
+      ...chosen,
+      row: slot.row,
+      col: slot.col,
+      direction: slot.direction
+    });
+
+    const index = unused.findIndex(word => word.answer === chosen.answer);
+    if (index >= 0) unused.splice(index, 1);
+  }
+
+  return { grid, entries };
+}
+
+function extractSlots(template) {
+  const slots = [];
+  const size = template.length;
+
+  for (let r = 0; r < size; r++) {
+    scanSlotLine(template, slots, "across", r);
+  }
+
+  for (let c = 0; c < size; c++) {
+    let line = "";
+
+    for (let r = 0; r < size; r++) {
+      line += template[r][c];
+    }
+
+    scanSlotLine([line], slots, "down", c);
+  }
+
+  return slots.map(slot => ({
+    ...slot,
+    crosses: countTemplateCrosses(template, slot)
+  }));
+}
+
+function scanSlotLine(lines, slots, direction, fixed) {
+  const line = lines[0];
+
+  let start = null;
+
+  for (let i = 0; i <= line.length; i++) {
+    const open = i < line.length && line[i] === ".";
+
+    if (open && start === null) start = i;
+
+    if ((!open || i === line.length) && start !== null) {
+      const length = i - start;
+
+      if (length >= 4 && length <= 8) {
+        slots.push({
+          direction,
+          row: direction === "across" ? fixed : start,
+          col: direction === "across" ? start : fixed,
+          length
+        });
+      }
+
+      start = null;
+    }
+  }
+}
+
+function countTemplateCrosses(template, slot) {
+  let crosses = 0;
+
+  const dr = slot.direction === "down" ? 1 : 0;
+  const dc = slot.direction === "across" ? 1 : 0;
+
+  for (let i = 0; i < slot.length; i++) {
+    const r = slot.row + dr * i;
+    const c = slot.col + dc * i;
+
+    const hasHorizontal =
+      c > 0 && c < template.length - 1 &&
+      template[r][c - 1] === "." &&
+      template[r][c + 1] === ".";
+
+    const hasVertical =
+      r > 0 && r < template.length - 1 &&
+      template[r - 1][c] === "." &&
+      template[r + 1][c] === ".";
+
+    if (hasHorizontal && hasVertical) crosses++;
+  }
+
+  return crosses;
+}
+
+function scoreWordForSlot(grid, word, slot) {
+  if (word.length !== slot.length) return -Infinity;
+
+  const dr = slot.direction === "down" ? 1 : 0;
+  const dc = slot.direction === "across" ? 1 : 0;
+
+  let score = 0;
+
+  for (let i = 0; i < word.length; i++) {
+    const r = slot.row + dr * i;
+    const c = slot.col + dc * i;
+    const existing = grid[r][c];
+
+    if (existing && existing !== word[i]) return -Infinity;
+
+    if (existing === word[i]) score += 100;
+  }
+
+  score += word.length;
+
+  return score;
 }
