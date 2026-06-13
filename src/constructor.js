@@ -69,10 +69,7 @@ export function constructPuzzle(puzzle) {
 
   const templateLayout = buildTemplateLayout(words, TEMPLATE_12);
 
-  if (
-    templateLayout.entries.length >= 10 &&
-    countCrossings(templateLayout.grid) >= 8
-  ) {
+  if (templateLayout.entries.length > 0) {
     return {
       ...puzzle,
       entries: templateLayout.entries
